@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 LoveSystem v1.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Mono', 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            font-style: italic;
+            margin-bottom: 10px;
+            color: #f4a7b9;
+        }
+
+        .header p {
+            font-size: 0.9em;
+            color: #e8637a;
+            letter-spacing: 3px;
+        }
+
+        .card {
+            background: #f9eff0;
+            border: 1.5px solid #1a1a2e;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: #1a1a2e;
+            color: white;
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .card-body {
+            padding: 16px;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .heart-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .type { color: #e8637a; }
+        .attr { color: #1a1a2e; font-weight: 700; }
+        .val { color: #888; font-style: italic; }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #e8637a;
+            border-radius: 4px;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+        }
+
+        button {
+            background: #1a1a2e;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 1px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #e8637a;
+        }
+
+        .moment-item {
+            background: white;
+            border-left: 3px solid #e8637a;
+            padding: 8px 12px;
+            margin: 6px 0;
+            border-radius: 0 4px 4px 0;
+            font-size: 13px;
+        }
+
+        .output-box {
+            background: #1a1a2e;
+            color: #f4a7b9;
+            border-radius: 4px;
+            padding: 14px 18px;
+            font-size: 13px;
+            margin-top: 8px;
+            font-style: italic;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .divider {
+            border-top: 1px dashed #ccc;
+            margin: 30px 0;
+        }
+
+        .note-box {
+            background: #fffbea;
+            border: 1px dashed #d4a843;
+            border-radius: 4px;
+            padding: 14px 18px;
+            font-size: 12px;
+            color: #7a6030;
+            font-style: italic;
+            line-height: 1.8;
+            margin-top: 20px;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <p style="font-size: 11px; color: #aaa; letter-spacing: 2px; margin-bottom: 4px;">📄 LoveSystem.html — v1.0</p>
+            <h1>Our Little Universe</h1>
+            <p>«realtime · synchronized · forever»</p>
+        </div>
+
+        <!-- You & Me Cards -->
+        <div class="two-column">
+            <!-- You -->
+            <div class="card">
+                <div class="card-header">You <small>«Person»</small></div>
+                <div class="card-body">
+                    <div><span class="type">String</span> <span class="attr">name</span> = <span class="val">"<span id="duName">My Babu</span>"</span></div>
+                    <div style="margin-top: 10px;">
+                        <input type="text" id="duNameInput" placeholder="Change name..." value="My Babu">
+                        <button onclick="changeDuName()">Save</button>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 12px;">
+                        <span class="type">List</span> <span class="attr">quirks</span>:
+                        <div id="duQuirks" style="margin-top: 5px;"></div>
+                        <input type="text" id="quirkInput" placeholder="Add a quirk...">
+                        <button onclick="addQuirk()">+ Quirk</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Heart -->
+            <div class="heart-center">♥</div>
+
+            <!-- Me -->
+            <div class="card">
+                <div class="card-header">Me <small>«Person»</small></div>
+                <div class="card-body">
+                    <div><span class="type">String</span> <span class="attr">name</span> = <span class="val">"<span id="ichName">Your Sera</span>"</span></div>
+                    <div style="margin-top: 10px;">
+                        <input type="text" id="ichNameInput" placeholder="Your name..." value="Your Sera">
+                        <button onclick="changeIchName()">Save</button>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 12px;">
+                        <span class="type">float</span> <span class="attr">happiness</span> = <span class="val" id="glueck">∞</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p style="text-align: center; font-size: 11px; color: #aaa; letter-spacing: 2px; margin: 20px 0;">«Association» · HEART CONNECTION · bidirectional · 1 ♥ 1</p>
+
+        <!-- Together Card -->
+        <div class="card">
+            <div class="card-header">Together <small>«SharedState»</small></div>
+            <div class="card-body">
+                <div><span class="type">str</span> <span class="attr">future</span> = <span class="val">"open & wonderful"</span></div>
+                <div style="margin-top: 15px;"><span class="type">List</span> <span class="attr">favoriteMemories</span> [<span id="momenteCount">0</span> Memories]</div>
+            </div>
+        </div>
+
+        <!-- Favorite Memories -->
+        <div class="card">
+            <div class="card-header">💌 Favorite Memories</div>
+            <div class="card-body">
+                <div id="momenteList"></div>
+                <div style="margin-top: 15px;">
+                    <input type="text" id="momentInput" placeholder="e.g. Drinking coffee together ☕">
+                    <button onclick="addMoment()">+ Save Memory</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Methods -->
+        <div class="card">
+            <div class="card-header">⚙️ Call Methods</div>
+            <div class="card-body">
+                <div class="button-row">
+                    <button onclick="callMethod('laughUntilItHurts')">you.laughUntilItHurts()</button>
+                    <button onclick="callMethod('doEverythingRight')">you.doEverythingRight()</button>
+                    <button onclick="callMethod('thinkOfYou')">me.thinkOfYou()</button>
+                </div>
+                <div class="button-row" style="margin-top: 10px;">
+                    <button onclick="callMethod('beProudOfYou')">me.beProudOfYou()</button>
+                    <button onclick="callMethod('alwaysBeThereForYou')">me.alwaysBeThereForYou()</button>
+                    <button onclick="callMethod('beThereForEachOther')">together.beThereForEachOther()</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plan Adventure -->
+        <div class="card">
+            <div class="card-header">🗺️ Plan Adventure</div>
+            <div class="card-body">
+                <input type="text" id="abenteuerInput" placeholder="Where shall we go? (e.g. Paris, forest walk, couch...)">
+                <button onclick="planAbenteuer()">together.planAdventure()</button>
+            </div>
+        </div>
+
+        <!-- Output -->
+        <div id="output" class="output-box" style="display: none;"></div>
+
+        <!-- Note -->
+        <div class="note-box">
+            <strong style="font-style:normal;font-size:9px;letter-spacing:2px;color:#d4a843">// NOTE</strong><br>
+            This app stores all data locally in your browser. Nothing is sent to any server. 100% private. ♥
+        </div>
+
+        <div style="text-align:center;margin-top:30px;font-style:italic;color:#ccc;font-size:13px;">Generated with logic, but sent with <span style="color:#e8637a;font-size:16px">♥</span></div>
+    </div>
+
+    <script>
+        // Load data from Local Storage
+        let data = {
+            du: {
+                name: 'My Babu',
+                quirks: ['too sweet', 'too funny', 'makes everything better']
+            },
+            ich: {
+                name: 'Your Sera',
+                glueck: '∞'
+            },
+            gemeinsam: {
+                momente: ['Laughing together', 'Quiet moments', 'Planning adventures']
+            }
+        };
+
+        // Load data from localStorage
+        function loadData() {
+            const saved = localStorage.getItem('lovesystemDataEN');
+            if (saved) {
+                data = JSON.parse(saved);
+            }
+            updateUI();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('lovesystemDataEN', JSON.stringify(data));
+        }
+
+        // Update UI
+        function updateUI() {
+            document.getElementById('duName').textContent = data.du.name;
+            document.getElementById('ichName').textContent = data.ich.name;
+            document.getElementById('duNameInput').value = data.du.name;
+            document.getElementById('ichNameInput').value = data.ich.name;
+
+            // Update quirks
+            const quirksHtml = data.du.quirks
+                .map((q, i) => `<div class="moment-item">${q} <button style="float:right;padding:2px 8px;font-size:10px;" onclick="removeQuirk(${i})">×</button></div>`)
+                .join('');
+            document.getElementById('duQuirks').innerHTML = quirksHtml || '<div style="color:#aaa;font-size:11px;">No quirks yet</div>';
+
+            // Update memories
+            const momenteHtml = data.gemeinsam.momente
+                .map((m, i) => `<div class="moment-item">${m} <button style="float:right;padding:2px 8px;font-size:10px;" onclick="removeMoment(${i})">×</button></div>`)
+                .join('');
+            document.getElementById('momenteList').innerHTML = momenteHtml || '<div style="color:#aaa;font-size:11px;">No memories yet</div>';
+            document.getElementById('momenteCount').textContent = data.gemeinsam.momente.length;
+        }
+
+        // Methods
+        function changeDuName() {
+            data.du.name = document.getElementById('duNameInput').value || 'My Babu';
+            saveData();
+            updateUI();
+        }
+
+        function changeIchName() {
+            data.ich.name = document.getElementById('ichNameInput').value || 'Your Sera';
+            saveData();
+            updateUI();
+        }
+
+        function addQuirk() {
+            const quirk = document.getElementById('quirkInput').value.trim();
+            if (quirk) {
+                data.du.quirks.push(quirk);
+                document.getElementById('quirkInput').value = '';
+                saveData();
+                updateUI();
+            }
+        }
+
+        function removeQuirk(index) {
+            data.du.quirks.splice(index, 1);
+            saveData();
+            updateUI();
+        }
+
+        function addMoment() {
+            const moment = document.getElementById('momentInput').value.trim();
+            if (moment) {
+                data.gemeinsam.momente.push(moment);
+                document.getElementById('momentInput').value = '';
+                saveData();
+                updateUI();
+            }
+        }
+
+        function removeMoment(index) {
+            data.gemeinsam.momente.splice(index, 1);
+            saveData();
+            updateUI();
+        }
+
+        function planAbenteuer() {
+            const where = document.getElementById('abenteuerInput').value.trim();
+            if (where) {
+                const output = `🗺️ Next adventure: ${where} — it's going to be unforgettable!`;
+                showOutput(output);
+                document.getElementById('abenteuerInput').value = '';
+            }
+        }
+
+        function callMethod(method) {
+            const methods = {
+                'laughUntilItHurts': () => `${data.du.name} laughs so hard your stomach hurts! 😂`,
+                'doEverythingRight': () => `${data.du.name} does everything right, you're perfect! ✓`,
+                'thinkOfYou': () => `💭 I'm constantly thinking of you, you're always on my mind!`,
+                'beProudOfYou': () => `🌟 I'm so proud of you, you're simply incredible!`,
+                'alwaysBeThereForYou': () => `🤝 I will always be there for you, no matter what!`,
+                'beThereForEachOther': () => `∞ We're always there for each other, in good times and bad — that's our strength!`
+            };
+
+            if (methods[method]) {
+                showOutput(methods[method]());
+            }
+        }
+
+        function showOutput(text) {
+            const output = document.getElementById('output');
+            output.innerHTML = '→ ' + text;
+            output.style.display = 'flex';
+            setTimeout(() => {
+                output.style.animation = 'fadeIn 0.3s';
+            }, 0);
+        }
+
+        // Load data on page load
+        window.addEventListener('load', loadData);
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
