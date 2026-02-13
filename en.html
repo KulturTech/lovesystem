@@ -279,6 +279,20 @@
         <!-- Output -->
         <div id="output" class="output-box" style="display: none;"></div>
 
+        <!-- Share Data -->
+        <div class="card">
+            <div class="card-header">📤 Share Data</div>
+            <div class="card-body">
+                <p style="font-size:12px;color:#888;margin-bottom:10px;">Export your data as a file and share it with your partner — or import their data.</p>
+                <div class="button-row">
+                    <button onclick="exportData()">📤 Export Data</button>
+                    <button onclick="document.getElementById('importFile').click()">📥 Import Data</button>
+                    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+                </div>
+                <div id="shareOutput" class="output-box" style="display:none;"></div>
+            </div>
+        </div>
+
         <!-- Note -->
         <div class="note-box">
             <strong style="font-style:normal;font-size:9px;letter-spacing:2px;color:#d4a843">// NOTE</strong><br>
@@ -415,6 +429,56 @@
             setTimeout(() => {
                 output.style.animation = 'fadeIn 0.3s';
             }, 0);
+        }
+
+        // Export data as JSON file
+        function exportData() {
+            const exportObj = {
+                ...data,
+                _meta: {
+                    app: 'LoveSystem v1.0',
+                    exportDate: new Date().toISOString()
+                }
+            };
+            const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `LoveSystem_${data.du.name.replace(/\s+/g, '-')}_${data.ich.name.replace(/\s+/g, '-')}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showShareOutput('Data exported! Send the file to your partner via WhatsApp, email, etc.');
+        }
+
+        // Import data from JSON file
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (!imported.du || !imported.ich || !imported.gemeinsam) {
+                        showShareOutput('Error: This is not a valid LoveSystem file.');
+                        return;
+                    }
+                    if (imported._meta) delete imported._meta;
+                    data = imported;
+                    saveData();
+                    updateUI();
+                    showShareOutput('Data imported successfully! Your shared memories are now here.');
+                } catch (err) {
+                    showShareOutput('Import error: The file could not be read.');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function showShareOutput(text) {
+            const el = document.getElementById('shareOutput');
+            el.innerHTML = '→ ' + text;
+            el.style.display = 'flex';
         }
 
         // Load data on page load
