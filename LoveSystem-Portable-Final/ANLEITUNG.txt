@@ -1,0 +1,79 @@
+╔════════════════════════════════════════════════════════╗
+║             💕 LOVESYSTEM - PORTABLE 💕               ║
+║        Keine Installation nötig - Einfach starten!     ║
+╚════════════════════════════════════════════════════════╝
+
+🚀 SCHNELLSTART
+═══════════════
+
+1. Doppelklick auf LoveSystem.exe
+2. Warten Sie 15-20 Sekunden...
+3. Browser öffnet sich automatisch
+4. Fertig! 💙
+
+Das war's! Keine Installation, keine Python erforderlich.
+
+
+📋 SYSTEMANFORDERUNGEN
+══════════════════════
+
+✓ Windows 7, 8, 10, 11 (64-Bit)
+✓ Keine Installation nötig
+✓ ~500 MB freier Speicher
+✓ Internet: NEIN (100% offline!)
+✓ Sonst: NICHTS erforderlich!
+
+
+⏱️ BEIM ERSTEN START
+════════════════════
+
+Die App braucht beim START die längste Zeit (15-30 Sekunden),
+weil sie alle Python-Module initialisiert.
+
+Das ist NORMAL - einfach warten! ☕
+
+Die gelben Meldungen sind Warnungen, keine Fehler.
+
+
+🔧 PROBLEME?
+═════════════
+
+❓ "Datei wird nicht gefunden"
+   → Windows Defender könnte die .exe blockieren
+   → Klick auf "Trotzdem ausführen"
+   → oder Antivirus-Scanner überprüfen
+
+❓ "Port 8501 wird verwendet"
+   → Eine andere App nutzt schon diesen Port
+   → Sperren Sie es, oder schließen Sie die andere App
+
+❓ "Browser öffnet nicht automatisch"
+   → Öffne manuell: http://localhost:8501
+
+❓ "App ist langsam/friert ein"
+   → Das ist beim ersten Start normal
+   → Warte insgesamt 30 Sekunden
+
+❓ "Wie beende ich die App?"
+   → Browser-Tab schließen, oder
+   → Task-Manager → LoveSystem beenden
+
+
+💡 TIPPS
+════════
+
+• Speichern Sie diese Datei neben der EXE
+• Die App funktioniert vollständig lokal
+• Keine Daten werden an externe Server gesendet
+• Sie können LoveSystem.exe überall hin mitnehmen
+
+
+❤️ VIEL SPASS!
+═══════════════
+
+Diese App wurde mit ♥ erstellt.
+
+Genießt die Zeit zusammen! 💙
+
+─────────────────────────────────────────────────────────
+Version: 1.0 | Datum: Februar 2026 | Made with Streamlit
