@@ -160,6 +160,16 @@
             margin-top: 20px;
         }
 
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .whatsapp-btn:hover {
+            background: #1da851;
+        }
+
         .button-row {
             display: flex;
             flex-wrap: wrap;
@@ -278,6 +288,7 @@
 
         <!-- Output -->
         <div id="output" class="output-box" style="display: none;"></div>
+        <button id="whatsappSend" class="whatsapp-btn" style="display:none;" onclick="sendViaWhatsApp()">📲 Send via WhatsApp</button>
 
         <!-- Share Data -->
         <div class="card">
@@ -290,6 +301,21 @@
                     <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
                 </div>
                 <div id="shareOutput" class="output-box" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="card">
+            <div class="card-header">📲 Send WhatsApp Message</div>
+            <div class="card-body">
+                <p style="font-size:12px;color:#888;margin-bottom:10px;">Save your partner's number, then you can send any generated message directly via WhatsApp.</p>
+                <div style="display:flex;gap:10px;align-items:flex-end;">
+                    <div style="flex:1;">
+                        <input type="tel" id="whatsappNumber" placeholder="e.g. +4917612345678" style="margin-top:0;">
+                    </div>
+                    <button onclick="saveWhatsAppNumber()">Save</button>
+                </div>
+                <div id="whatsappStatus" style="font-size:11px;color:#25D366;margin-top:8px;display:none;"></div>
             </div>
         </div>
 
@@ -426,6 +452,8 @@
             const output = document.getElementById('output');
             output.innerHTML = '→ ' + text;
             output.style.display = 'flex';
+            lastMessage = text;
+            updateWhatsAppButton();
             setTimeout(() => {
                 output.style.animation = 'fadeIn 0.3s';
             }, 0);
@@ -481,8 +509,48 @@
             el.style.display = 'flex';
         }
 
+        // WhatsApp functions
+        let lastMessage = '';
+
+        function saveWhatsAppNumber() {
+            const num = document.getElementById('whatsappNumber').value.trim();
+            if (!num) return;
+            localStorage.setItem('lovesystem_whatsapp', num);
+            const status = document.getElementById('whatsappStatus');
+            status.textContent = '✓ Number saved!';
+            status.style.display = 'block';
+            updateWhatsAppButton();
+        }
+
+        function loadWhatsAppNumber() {
+            const saved = localStorage.getItem('lovesystem_whatsapp');
+            if (saved) {
+                document.getElementById('whatsappNumber').value = saved;
+                const status = document.getElementById('whatsappStatus');
+                status.textContent = '✓ Saved number: ' + saved;
+                status.style.display = 'block';
+            }
+        }
+
+        function updateWhatsAppButton() {
+            const btn = document.getElementById('whatsappSend');
+            const num = localStorage.getItem('lovesystem_whatsapp');
+            btn.style.display = (num && lastMessage) ? 'inline-block' : 'none';
+        }
+
+        function sendViaWhatsApp() {
+            const num = localStorage.getItem('lovesystem_whatsapp');
+            if (!num || !lastMessage) return;
+            const clean = num.replace(/[^0-9+]/g, '').replace(/^\+/, '');
+            const url = 'https://wa.me/' + clean + '?text=' + encodeURIComponent(lastMessage);
+            window.open(url, '_blank');
+        }
+
         // Load data on page load
-        window.addEventListener('load', loadData);
+        window.addEventListener('load', function() {
+            loadData();
+            loadWhatsAppNumber();
+        });
 
         // Add CSS animation
         const style = document.createElement('style');
